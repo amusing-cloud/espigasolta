@@ -94,8 +94,8 @@ padding:8px;
 <script>
 
 const supabase = window.supabase.createClient(
-"SUPABASE_URL",
-"SUPABASE_ANON_KEY"
+"postgresql://postgres:[espigasolta]@db.cvsbuzcdporawvunyous.supabase.co:5432/postgres",
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2c2J1emNkcG9yYXd2dW55b3VzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1OTE4NTYsImV4cCI6MjA4OTE2Nzg1Nn0.uwjIQPohUH7u_kwgprrT1o_MgJTCGBHmT3imlt8amEc"
 )
 
 document.getElementById("form").onsubmit = async (e)=>{
