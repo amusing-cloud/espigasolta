@@ -4,138 +4,92 @@
 <meta charset="UTF-8">
 <title>Registo de Trabalhos</title>
 
+<!-- CSS externo -->
+<link rel="stylesheet" href="style.css">
+
 <!-- Supabase JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- SheetJS para exportar Excel -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-
-<style>
-body{
-  font-family: Arial;
-  max-width:800px;
-  margin:auto;
-  padding:20px;
-}
-
-input, textarea{
-  width:100%;
-  padding:8px;
-  margin:5px 0;
-}
-
-button{
-  padding:10px;
-  margin-top:10px;
-}
-
-table{
-  width:100%;
-  margin-top:30px;
-  border-collapse:collapse;
-}
-
-td,th{
-  border:1px solid #ccc;
-  padding:8px;
-}
-</style>
-
 </head>
 <body>
 
-<h2>Novo Trabalho</h2>
+<div class="container">
+  <h2>Registo de Trabalhos</h2>
 
-<form id="form">
+  <form id="form">
+    <label>Data</label>
+    <input type="date" id="data" required>
 
-<label>Data</label>
-<input type="date" id="data" required>
+    <label>Hora Entrada</label>
+    <input type="time" id="entrada" required>
 
-<label>Hora entrada</label>
-<input type="time" id="entrada" required>
+    <label>Hora Saída</label>
+    <input type="time" id="saida" required>
 
-<label>Hora saída</label>
-<input type="time" id="saida" required>
+    <label>Local</label>
+    <input type="text" id="local">
 
-<label>Local</label>
-<input type="text" id="local">
+    <label>Distância (km)</label>
+    <input type="number" id="distancia">
 
-<label>Distância km</label>
-<input type="number" id="distancia">
+    <label>Observações</label>
+    <textarea id="obs" rows="3"></textarea>
 
-<label>Observações</label>
-<textarea id="obs"></textarea>
+    <button type="submit">Guardar Trabalho</button>
+  </form>
 
-<button type="submit">Guardar</button>
+  <button class="export" onclick="exportarExcel()">Exportar Excel</button>
 
-</form>
-
-<h2>Lista de Trabalhos</h2>
-
-<button onclick="exportarExcel()">Exportar Excel</button>
-
-<table id="tabela">
-<thead>
-<tr>
-<th>Data</th>
-<th>Entrada</th>
-<th>Saída</th>
-<th>Local</th>
-<th>Distância</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+  <table id="tabela">
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Entrada</th>
+        <th>Saída</th>
+        <th>Local</th>
+        <th>Distância</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
 <script>
 // ==== CONFIGURAÇÃO SUPABASE ====
-// Substitui estas duas variáveis pelas tuas do projeto
+// Substituir pelos teus dados
 const SUPABASE_URL = "https://cvsbuzcdporawvunyous.supabase.co"
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2c2J1emNkcG9yYXd2dW55b3VzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1OTE4NTYsImV4cCI6MjA4OTE2Nzg1Nn0.uwjIQPohUH7u_kwgprrT1o_MgJTCGBHmT3imlt8amEc"
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
-// ==== FUNÇÃO DE ENVIO ====
+// ==== Envio ====
 document.getElementById("form").onsubmit = async (e) => {
   e.preventDefault()
-
-  const { data, error } = await supabase.from("trabalhos").insert({
+  const values = {
     data: data.value,
     hora_entrada: entrada.value,
     hora_saida: saida.value,
     local: local.value,
     distancia: distancia.value,
     observacoes: obs.value
-  })
-
+  }
+  console.log("Tentando inserir:", values)
+  const { data: result, error } = await supabase.from("trabalhos").insert(values)
   if (error) {
-    console.error("Erro ao guardar:", error)
-    alert("Erro ao guardar: " + error.message)
+    console.error("Erro:", error)
+    alert("Erro: " + error.message)
   } else {
-    console.log("Trabalho guardado:", data)
-    alert("Trabalho guardado com sucesso!")
+    console.log("Guardado:", result)
+    alert("Trabalho guardado!")
     carregar()
     document.getElementById("form").reset()
   }
 }
 
-// ==== FUNÇÃO DE CARREGAR DADOS ====
+// ==== Carregar dados ====
 async function carregar(){
-  console.log("A carregar trabalhos...")
-  const { data, error } = await supabase
-    .from("trabalhos")
-    .select("*")
-    .order("data", { ascending: false })
-
-  if (error) {
-    console.error("Erro ao carregar dados:", error)
-    return
-  }
-
-  console.log("Dados carregados:", data)
-
+  const { data, error } = await supabase.from("trabalhos").select("*").order("data",{ascending:false})
+  if (error) { console.error(error); return }
   const tbody = document.querySelector("tbody")
   tbody.innerHTML = ""
-
   data.forEach(t => {
     tbody.innerHTML += `
       <tr>
@@ -149,14 +103,14 @@ async function carregar(){
   })
 }
 
-// ==== FUNÇÃO DE EXPORTAR PARA EXCEL ====
+// ==== Exportar Excel ====
 function exportarExcel(){
   let tabela = document.getElementById("tabela")
   let wb = XLSX.utils.table_to_book(tabela)
   XLSX.writeFile(wb, "trabalhos.xlsx")
 }
 
-// Carregar dados assim que a página abre
+// Carregar dados ao abrir a página
 carregar()
 </script>
 
