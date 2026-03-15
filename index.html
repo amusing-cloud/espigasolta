@@ -1,48 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="UTF-8">
 <title>Registo de Trabalhos</title>
 
+<!-- Supabase JS -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- SheetJS para exportar Excel -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <style>
-
 body{
-font-family: Arial;
-max-width:800px;
-margin:auto;
-padding:20px;
+  font-family: Arial;
+  max-width:800px;
+  margin:auto;
+  padding:20px;
 }
 
 input, textarea{
-width:100%;
-padding:8px;
-margin:5px 0;
+  width:100%;
+  padding:8px;
+  margin:5px 0;
 }
 
 button{
-padding:10px;
-margin-top:10px;
+  padding:10px;
+  margin-top:10px;
 }
 
 table{
-width:100%;
-margin-top:30px;
-border-collapse:collapse;
+  width:100%;
+  margin-top:30px;
+  border-collapse:collapse;
 }
 
 td,th{
-border:1px solid #ccc;
-padding:8px;
+  border:1px solid #ccc;
+  padding:8px;
 }
-
 </style>
 
 </head>
-
 <body>
 
 <h2>Novo Trabalho</h2>
@@ -76,7 +74,6 @@ padding:8px;
 <button onclick="exportarExcel()">Exportar Excel</button>
 
 <table id="tabela">
-
 <thead>
 <tr>
 <th>Data</th>
@@ -86,78 +83,81 @@ padding:8px;
 <th>Distância</th>
 </tr>
 </thead>
-
 <tbody></tbody>
-
 </table>
 
 <script>
+// ==== CONFIGURAÇÃO SUPABASE ====
+// Substitui estas duas variáveis pelas tuas do projeto
+const SUPABASE_URL = "https://TEU_PROJETO.supabase.co"
+const SUPABASE_ANON_KEY = "SUA_ANON_KEY_AQUI"
 
-const supabase = window.supabase.createClient(
-"https://cvsbuzcdporawvunyous.supabase.co",
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN2c2J1emNkcG9yYXd2dW55b3VzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM1OTE4NTYsImV4cCI6MjA4OTE2Nzg1Nn0.uwjIQPohUH7u_kwgprrT1o_MgJTCGBHmT3imlt8amEc"
-)
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-document.getElementById("form").onsubmit = async (e)=>{
+// ==== FUNÇÃO DE ENVIO ====
+document.getElementById("form").onsubmit = async (e) => {
+  e.preventDefault()
 
-e.preventDefault()
+  const { data, error } = await supabase.from("trabalhos").insert({
+    data: data.value,
+    hora_entrada: entrada.value,
+    hora_saida: saida.value,
+    local: local.value,
+    distancia: distancia.value,
+    observacoes: obs.value
+  })
 
-await supabase.from("trabalhos").insert({
-
-data: data.value,
-hora_entrada: entrada.value,
-hora_saida: saida.value,
-local: local.value,
-distancia: distancia.value,
-observacoes: obs.value
-
-})
-
-alert("Trabalho guardado")
-
-carregar()
-
+  if (error) {
+    console.error("Erro ao guardar:", error)
+    alert("Erro ao guardar: " + error.message)
+  } else {
+    console.log("Trabalho guardado:", data)
+    alert("Trabalho guardado com sucesso!")
+    carregar()
+    document.getElementById("form").reset()
+  }
 }
 
+// ==== FUNÇÃO DE CARREGAR DADOS ====
 async function carregar(){
+  console.log("A carregar trabalhos...")
+  const { data, error } = await supabase
+    .from("trabalhos")
+    .select("*")
+    .order("data", { ascending: false })
 
-const {data} = await supabase
-.from("trabalhos")
-.select("*")
-.order("data",{ascending:false})
+  if (error) {
+    console.error("Erro ao carregar dados:", error)
+    return
+  }
 
-const tbody = document.querySelector("tbody")
+  console.log("Dados carregados:", data)
 
-tbody.innerHTML=""
+  const tbody = document.querySelector("tbody")
+  tbody.innerHTML = ""
 
-data.forEach(t=>{
-
-tbody.innerHTML += `
-<tr>
-<td>${t.data}</td>
-<td>${t.hora_entrada}</td>
-<td>${t.hora_saida}</td>
-<td>${t.local}</td>
-<td>${t.distancia}</td>
-</tr>
-`
-
-})
-
+  data.forEach(t => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${t.data}</td>
+        <td>${t.hora_entrada}</td>
+        <td>${t.hora_saida}</td>
+        <td>${t.local || ""}</td>
+        <td>${t.distancia || ""}</td>
+      </tr>
+    `
+  })
 }
 
-carregar()
-
+// ==== FUNÇÃO DE EXPORTAR PARA EXCEL ====
 function exportarExcel(){
-
-let tabela=document.getElementById("tabela")
-
-let wb=XLSX.utils.table_to_book(tabela)
-
-XLSX.writeFile(wb,"trabalhos.xlsx")
-
+  let tabela = document.getElementById("tabela")
+  let wb = XLSX.utils.table_to_book(tabela)
+  XLSX.writeFile(wb, "trabalhos.xlsx")
 }
 
+// Carregar dados assim que a página abre
+carregar()
 </script>
 
 </body>
