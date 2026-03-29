@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>ESPIGA À SOLTA</title>
+  <link rel="icon" type="image/png" href="images/logo_fav.png">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-bg">
+
+  <!-- LOGIN -->
+  <div id="login-section">
+    <img src="images/logo_vector.png" alt="Espiga Solta" class="login-logo">
+    <input type="email" id="email" placeholder="EMAIL">
+    <input type="password" id="password" placeholder="PASSWORD">
+    <button onclick="login()">LOGIN</button>
+  </div>
+
+  <!-- VISTA TRABALHADOR -->
+  <div id="worker-app" class="hidden">
+    <h2>NOVO SERVIÇO</h2>
+    <form id="serviceForm">
+      <input type="text" id="company" placeholder="Empresa (Cliente)">
+      <input type="text" id="location" placeholder="Local">
+      <input type="date" id="date">
+      <input type="time" id="startTime" placeholder="Hora de Início">
+      <input type="time" id="endTime" placeholder="Hora de Fim">
+      <label class="transport-label">
+        Transporte
+        <input type="checkbox" id="transport">
+      </label>
+      <input type="text" id="designation" placeholder="Designação de Serviço">
+      <button type="submit">GUARDAR</button>
+    </form>
+    <p id="successMsg" class="hidden success-msg">SERVIÇO GUARDADO COM SUCESSO!</p>
+    <button onclick="logout()" class="logout-btn">LOGOUT</button>
+  </div>
+
+  <!-- VISTA GESTOR -->
+  <div id="manager-app" class="hidden">
+    <h2>SERVIÇOS</h2>
+    <div class="table-wrapper">
+      <table id="servicesTable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Empresa</th>
+            <th>Local</th>
+            <th>Data</th>
+            <th>Hora Início</th>
+            <th>Hora Fim</th>
+            <th>Horas Totais</th>
+            <th>Transporte</th>
+            <th>Designação</th>
+            <th>Faturado</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="manager-btns">
+      <button onclick="exportToCSV()">EXPORTAR EXCEL</button>
+      <button onclick="logout()" class="logout-btn">LOGOUT</button>
+    </div>
+  </div>
+
+  <!-- Firebase JS SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <script src="app.js"></script>
+</body>
+</html>

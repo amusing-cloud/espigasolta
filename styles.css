@@ -1,0 +1,235 @@
+/* ==== BASE ==== */
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  background-color: #f7fffa;
+  margin: 0;
+  padding: 20px;
+  color: #282828;
+}
+
+/* ==== FUNDO LOGIN ==== */
+body.login-bg {
+  background-image: url('images/anna-mircea-jhP9c_mpkRI-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body.login-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 0;
+}
+
+/* ==== CAIXA DE LOGIN ==== */
+#login-section {
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
+  padding: 40px 35px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 380px;
+}
+
+.login-logo {
+  display: block;
+  width: 80%;
+  max-width: 260px;
+  margin: 0 auto 30px auto;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ==== TÍTULOS ==== */
+h2 {
+  font-weight: 700;
+  color: #2F7D4A;
+  margin-bottom: 15px;
+}
+
+/* ==== INPUTS ==== */
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+textarea {
+  display: block;
+  margin: 10px 0;
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  border: 1px solid #2F7D4A;
+  border-radius: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+input:focus, textarea:focus {
+  border-color: #1a4529;
+  box-shadow: 0 4px 12px rgba(47, 125, 74, 0.3);
+  outline: none;
+}
+
+/* ==== TRANSPORTE CHECKBOX ==== */
+.transport-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.transport-label input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  cursor: pointer;
+  accent-color: #2F7D4A;
+  box-shadow: none;
+}
+
+/* ==== BOTÕES ==== */
+button {
+  background-color: #2F7D4A;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'IBM Plex Sans', sans-serif;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(22, 70, 2, 0.4);
+  width: 100%;
+}
+
+button:hover {
+  background-color: #1a4529;
+  box-shadow: 0 6px 15px rgba(22, 70, 2, 0.4);
+}
+
+.logout-btn {
+  background-color: #888;
+  box-shadow: none;
+  margin-top: 15px;
+}
+
+.logout-btn:hover {
+  background-color: #555;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  box-shadow: none;
+  font-size: 18px;
+  cursor: pointer;
+  width: auto;
+  padding: 4px 8px;
+  margin: 0;
+}
+
+.delete-btn:hover {
+  background: none;
+  box-shadow: none;
+}
+
+/* ==== MENSAGEM SUCESSO ==== */
+.success-msg {
+  color: #2F7D4A;
+  font-size: 15px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+/* ==== VISTA TRABALHADOR ==== */
+#worker-app {
+  max-width: 480px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* ==== VISTA GESTOR ==== */
+#manager-app {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 30px 25px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.manager-btns {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.manager-btns button {
+  width: auto;
+}
+
+/* ==== TABELA ==== */
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  border-radius: 12px;
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+  min-width: 900px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #6c8a76;
+  color: #f5f5f5;
+  font-weight: 700;
+}
+
+td {
+  background-color: #eafbef;
+  border-bottom: 1px solid #d4edda;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:nth-child(even) td {
+  background-color: #d4edda;
+}
