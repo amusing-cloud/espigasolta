@@ -10,7 +10,7 @@ body { /* Estilo aplicado a toda a página, define a aparência geral */
 
 /* ==== FUNDO LOGIN ==== */
 body.login-bg { /* Estilo aplicado ao body APENAS quando tem a classe "login-bg" (página de login) */
-  background-image: url('anna-mircea-jhP9c_mpkRI-unsplash.jpg'); /* Define a imagem de fundo da página de login, localizada na pasta images */
+  background-image: url('images/anna-mircea-jhP9c_mpkRI-unsplash.jpg'); /* Define a imagem de fundo da página de login, localizada na pasta images */
   background-size: cover; /* Faz a imagem cobrir toda a área do ecrã, sem deixar espaços em branco, mesmo que seja cortada */
   background-position: center; /* Centra a imagem de fundo, garantindo que a parte central fica sempre visível */
   background-repeat: no-repeat; /* Impede que a imagem se repita caso seja menor que o ecrã */
@@ -272,6 +272,7 @@ tr:nth-child(even) td { /* Estilo aplicado às células das linhas PARES da tabe
   letter-spacing: 1px;
   color: #2F7D4A; /* Usei o verde da tua app para dar um toque de cor */
 }
+
 /* ==== RESPONSIVO MOBILE ==== */
 /* Estas regras só funcionam em telemóveis (até 600px) */
 
@@ -327,3 +328,22 @@ input[type="date"]::-webkit-date-and-time-value,
 input[type="time"]::-webkit-date-and-time-value {
   text-align: left;
 }
+/* ==== LABELS DO FORMULÁRIO ==== */
+label { /* Estilo das labels que aparecem por cima dos campos */
+  display: block; /* Ocupa a linha toda, ficando por cima do input */
+  font-size: 12px; /* Tamanho pequeno para não competir com o conteúdo do campo */
+  font-weight: 700; /* Bold para ser bem legível */
+  color: #2F7D4A; /* Verde da app para dar consistência visual */
+  margin-top: 12px; /* Espaço acima da label para separar dos campos anteriores */
+  margin-bottom: 3px; /* Espaço pequeno entre a label e o campo */
+  letter-spacing: 1px; /* Espaçamento entre letras para aspeto mais profissional */
+  text-transform: uppercase; /* Texto em maiúsculas, igual ao estilo geral da app */
+} /* Fecha o estilo da label */
+
+/* Garante que a label do transporte não herda o estilo acima */
+.transport-label { /* Sobrescreve o estilo base da label para a checkbox de transporte */
+  font-size: 16px; /* Tamanho maior, igual aos outros campos */
+  text-transform: none; /* Remove as maiúsculas forçadas */
+  letter-spacing: 0; /* Remove o espaçamento extra */
+  color: #282828; /* Cor escura normal, igual ao texto da app */
+} /* Fecha o estilo do .transport-label */
