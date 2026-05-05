@@ -10,7 +10,7 @@ body { /* Estilo aplicado a toda a página, define a aparência geral */
 
 /* ==== FUNDO LOGIN ==== */
 body.login-bg { /* Estilo aplicado ao body APENAS quando tem a classe "login-bg" (página de login) */
-  background-image: url(anna-mircea-jhP9c_mpkRI-unsplash.jpg); /* Define a imagem de fundo da página de login, localizada na pasta images */
+  background-image: url('images/anna-mircea-jhP9c_mpkRI-unsplash.jpg'); /* Define a imagem de fundo da página de login, localizada na pasta images */
   background-size: cover; /* Faz a imagem cobrir toda a área do ecrã, sem deixar espaços em branco, mesmo que seja cortada */
   background-position: center; /* Centra a imagem de fundo, garantindo que a parte central fica sempre visível */
   background-repeat: no-repeat; /* Impede que a imagem se repita caso seja menor que o ecrã */
@@ -35,6 +35,318 @@ body.login-bg::before { /* Pseudo-elemento que cria uma camada escura por cima d
   z-index: 1; /* Coloca a caixa de login por cima do overlay escuro (que tem z-index: 0) */
   background-color: #fff; /* Fundo branco puro para a caixa de login */
   padding: 40px 35px; /* Espaço interior: 40px em cima/baixo e 35px nos lados, para o conteúdo não colar às bordas */
+  border-radius: 20px; /* Arredonda os cantos da caixa com um raio de 20px */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25); /* Sombra suave por baixo da caixa: deslocada 10px para baixo, com 40px de desfoque e 25% de opacidade */
+  width: 100%; /* A caixa ocupa 100% da largura disponível (limitada pelo max-width abaixo) */
+  max-width: 380px; /* Largura máxima de 380px, para a caixa não ficar demasiado larga em ecrãs grandes */
+} /* Fecha o estilo do #login-section */
+
+.login-logo { /* Estilo da imagem do logótipo dentro da caixa de login */
+  display: block; /* Transforma a imagem num elemento de bloco, necessário para o margin auto funcionar */
+  width: 80%; /* A imagem ocupa 80% da largura da caixa de login */
+  max-width: 260px; /* Largura máxima de 260px para o logo não ficar demasiado grande */
+  margin: 0 auto 30px auto; /* Centra horizontalmente (auto nos lados) e adiciona 30px de espaço abaixo do logo */
+} /* Fecha o estilo do .login-logo */
+
+.hidden { /* Classe utilitária usada pelo JavaScript para esconder/mostrar elementos */
+  display: none; /* Esconde completamente o elemento, como se não existisse na página */
+} /* Fecha o estilo do .hidden */
+
+/* ==== TÍTULOS ==== */
+h2 { /* Estilo aplicado a todos os títulos de nível 2 da página */
+  font-weight: 700; /* Define o peso da fonte como Bold */
+  color: #2F7D4A; /* Cor verde escuro para os títulos, seguindo a paleta de cores da app */
+  margin-bottom: 15px; /* Adiciona 15px de espaço abaixo de cada título */
+} /* Fecha o estilo do h2 */
+
+/* ==== INPUTS ==== */
+input[type="email"], /* Seleciona especificamente os campos de email */
+input[type="password"], /* Seleciona especificamente os campos de password */
+input[type="text"], /* Seleciona especificamente os campos de texto */
+input[type="date"], /* Seleciona especificamente os campos de data */
+input[type="time"], /* Seleciona especificamente os campos de hora */
+input[type="number"], /* Seleciona especificamente os campos numéricos */
+textarea { /* Seleciona as áreas de texto de várias linhas. Todos os elementos acima partilham os estilos abaixo */
+  display: block; /* Transforma o input num elemento de bloco, fazendo-o ocupar a linha toda */
+  margin: 10px 0; /* Adiciona 10px de espaço acima e abaixo de cada campo, separando-os visualmente */
+  width: 100%; /* O campo ocupa 100% da largura disponível */
+  padding: 12px 15px; /* Espaço interior: 12px em cima/baixo e 15px nos lados, para o texto não colar às bordas */
+  font-size: 16px; /* Tamanho de letra de 16px, o mínimo recomendado para evitar zoom automático no iPhone */
+  font-family: 'IBM Plex Sans', sans-serif; /* Garante que os campos usam a mesma fonte da app (alguns browsers usam fonte diferente por defeito) */
+  font-weight: 700; /* Define o peso da fonte como Bold nos campos */
+  border: 1px solid #2F7D4A; /* Borda de 1px sólida na cor verde da app */
+  border-radius: 12px; /* Arredonda os cantos dos campos com um raio de 12px */
+  background-color: #fff; /* Fundo branco para os campos */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08); /* Sombra suave por baixo dos campos para dar profundidade */
+  transition: all 0.2s ease; /* Animação suave de 0.2 segundos em todas as propriedades ao focar/desfocar */
+  box-sizing: border-box; /* Garante que o padding e a borda são incluídos na largura total (width: 100% não ultrapassa o contentor) */
+} /* Fecha o estilo dos inputs e textarea */
+
+input:focus, textarea:focus { /* Estilo aplicado quando o utilizador clica num campo e começa a escrever */
+  border-color: #1a4529; /* Muda a cor da borda para um verde mais escuro ao focar, dando feedback visual */
+  box-shadow: 0 4px 12px rgba(47, 125, 74, 0.3); /* Sombra verde suave e maior ao focar, destacando o campo ativo */
+  outline: none; /* Remove o contorno azul padrão do browser, substituído pela nossa borda e sombra personalizadas */
+} /* Fecha o estilo do focus */
+
+/* ==== TRANSPORTE CHECKBOX ==== */
+.transport-label { /* Estilo do contentor que agrupa o texto "Transporte" e a sua checkbox */
+  display: flex; /* Ativa o Flexbox para alinhar o texto e a checkbox na mesma linha */
+  align-items: center; /* Alinha verticalmente ao centro o texto e a checkbox */
+  gap: 10px; /* Adiciona 10px de espaço entre o texto "Transporte" e a checkbox */
+  margin: 10px 0; /* Adiciona 10px de espaço acima e abaixo, igual aos outros campos */
+  font-size: 16px; /* Tamanho de letra de 16px, igual aos outros campos */
+  cursor: pointer; /* Muda o cursor para uma mão ao passar por cima, indicando que é clicável */
+} /* Fecha o estilo do .transport-label */
+
+.transport-label input[type="checkbox"] { /* Estilo específico para a checkbox dentro do label de transporte */
+  width: 22px; /* Largura de 22px para a checkbox ficar maior e mais fácil de clicar no telemóvel */
+  height: 22px; /* Altura de 22px, igual à largura, para a checkbox ficar quadrada */
+  margin: 0; /* Remove qualquer margem padrão do browser na checkbox */
+  cursor: pointer; /* Muda o cursor para uma mão ao passar por cima da checkbox */
+  accent-color: #2F7D4A; /* Define a cor de preenchimento da checkbox quando está marcada, usando o verde da app */
+  box-shadow: none; /* Remove a sombra que foi aplicada a todos os inputs acima, pois a checkbox não precisa dela */
+} /* Fecha o estilo da checkbox de transporte */
+
+/* ==== BOTÕES ==== */
+button { /* Estilo base aplicado a TODOS os botões da página */
+  background-color: #2F7D4A; /* Cor de fundo verde da app para todos os botões */
+  color: #fff; /* Cor do texto branco para contrastar com o fundo verde */
+  border: none; /* Remove a borda padrão dos botões */
+  padding: 12px 20px; /* Espaço interior: 12px em cima/baixo e 20px nos lados */
+  font-size: 16px; /* Tamanho de letra de 16px */
+  font-weight: 700; /* Texto em Bold */
+  font-family: 'IBM Plex Sans', sans-serif; /* Garante que os botões usam a mesma fonte da app */
+  border-radius: 12px; /* Arredonda os cantos dos botões */
+  cursor: pointer; /* Muda o cursor para uma mão ao passar por cima, indicando que é clicável */
+  transition: all 0.2s ease; /* Animação suave de 0.2 segundos ao fazer hover */
+  margin-top: 10px; /* Adiciona 10px de espaço acima de cada botão */
+  box-shadow: 0 4px 12px rgba(22, 70, 2, 0.4); /* Sombra verde escura por baixo dos botões para dar profundidade */
+  width: 100%; /* O botão ocupa 100% da largura disponível (pode ser sobrescrito em classes específicas) */
+} /* Fecha o estilo base do button */
+
+button:hover { /* Estilo aplicado quando o utilizador passa o rato por cima de um botão */
+  background-color: #1a4529; /* Escurece o fundo do botão ao fazer hover, dando feedback visual */
+  box-shadow: 0 6px 15px rgba(22, 70, 2, 0.4); /* Aumenta ligeiramente a sombra ao fazer hover, criando efeito de elevação */
+} /* Fecha o estilo do hover dos botões */
+
+.logout-btn { /* Estilo específico para os botões de logout, sobrescrevendo o estilo base */
+  background-color: #888; /* Cor cinzenta para o botão de logout, diferenciando-o dos botões de ação principal */
+  box-shadow: none; /* Remove a sombra do botão de logout para um visual mais discreto */
+  margin-top: 15px; /* Adiciona 15px de espaço acima, um pouco mais que os outros botões para separar visualmente */
+} /* Fecha o estilo do .logout-btn */
+
+.logout-btn:hover { /* Estilo do botão de logout ao fazer hover */
+  background-color: #555; /* Escurece o cinzento ao fazer hover, mantendo o feedback visual consistente */
+} /* Fecha o estilo do hover do .logout-btn */
+
+.delete-btn { /* Estilo específico para o botão de apagar (🗑️) na tabela do Gestor */
+  background: none; /* Remove o fundo verde padrão dos botões, tornando-o transparente */
+  border: none; /* Remove qualquer borda (já está no base, mas reforça) */
+  box-shadow: none; /* Remove a sombra do botão de apagar */
+  font-size: 18px; /* Tamanho do emoji do caixote do lixo */
+  cursor: pointer; /* Muda o cursor para uma mão ao passar por cima */
+  width: auto; /* Sobrescreve o width: 100% do base, para o botão ter apenas a largura do seu conteúdo */
+  padding: 4px 8px; /* Espaço interior pequeno à volta do emoji */
+  margin: 0; /* Remove a margem superior do botão base */
+} /* Fecha o estilo do .delete-btn */
+
+.delete-btn:hover { /* Estilo do botão de apagar ao fazer hover */
+  background: none; /* Mantém o fundo transparente ao fazer hover (sobrescreve o hover base) */
+  box-shadow: none; /* Mantém sem sombra ao fazer hover */
+} /* Fecha o estilo do hover do .delete-btn */
+
+/* ==== MENSAGEM SUCESSO ==== */
+.success-msg { /* Estilo da mensagem "SERVIÇO GUARDADO COM SUCESSO!" */
+  color: #2F7D4A; /* Cor verde da app para a mensagem de sucesso */
+  font-size: 15px; /* Tamanho de letra ligeiramente menor que o padrão */
+  margin-top: 10px; /* Adiciona 10px de espaço acima da mensagem */
+  text-align: center; /* Centra o texto da mensagem horizontalmente */
+} /* Fecha o estilo do .success-msg */
+
+/* ==== VISTA TRABALHADOR ==== */
+#worker-app { /* Estilo do contentor principal da vista do Trabalhador */
+  max-width: 480px; /* Largura máxima de 480px, ideal para uso em telemóvel */
+  margin: 0 auto; /* Centra o contentor horizontalmente na página */
+  background-color: #fff; /* Fundo branco para a caixa do Trabalhador */
+  padding: 30px 25px; /* Espaço interior: 30px em cima/baixo e 25px nos lados */
+  border-radius: 20px; /* Arredonda os cantos da caixa */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra suave por baixo da caixa para dar profundidade */
+} /* Fecha o estilo do #worker-app */
+
+/* ==== VISTA GESTOR ==== */
+#manager-app { /* Estilo do contentor principal da vista do Gestor */
+  max-width: 1200px; /* Largura máxima de 1200px, maior que o Trabalhador para acomodar a tabela */
+  margin: 0 auto; /* Centra o contentor horizontalmente na página */
+  background-color: #fff; /* Fundo branco para a caixa do Gestor */
+  padding: 30px 25px; /* Espaço interior: 30px em cima/baixo e 25px nos lados */
+  border-radius: 20px; /* Arredonda os cantos da caixa */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08); /* Sombra suave por baixo da caixa para dar profundidade */
+} /* Fecha o estilo do #manager-app */
+
+.manager-btns { /* Estilo do contentor que agrupa os botões de ação do Gestor (Exportar e Logout) */
+  display: flex; /* Ativa o Flexbox para colocar os botões lado a lado */
+  gap: 15px; /* Adiciona 15px de espaço entre os botões */
+  margin-top: 20px; /* Adiciona 20px de espaço acima dos botões, separando-os da tabela */
+} /* Fecha o estilo do .manager-btns */
+
+.manager-btns button { /* Estilo específico para os botões dentro do contentor .manager-btns */
+  width: auto; /* Sobrescreve o width: 100% do base, para os botões terem apenas a largura do seu conteúdo */
+} /* Fecha o estilo dos botões do .manager-btns */
+
+/* ==== TABELA ==== */
+.table-wrapper { /* Estilo do contentor que envolve a tabela, permitindo scroll horizontal */
+  overflow-x: auto; /* Ativa o scroll horizontal quando a tabela é mais larga que o ecrã (essencial no telemóvel) */
+  width: 100%; /* O contentor ocupa 100% da largura disponível */
+  border-radius: 12px; /* Arredonda os cantos do contentor da tabela */
+} /* Fecha o estilo do .table-wrapper */
+
+table { /* Estilo aplicado à tabela de serviços */
+  border-collapse: separate; /* Mantém as células separadas, necessário para o border-radius funcionar nas células */
+  border-spacing: 0; /* Remove o espaço padrão entre células (que border-collapse: separate adiciona) */
+  width: 100%; /* A tabela ocupa 100% da largura do seu contentor */
+  min-width: 900px; /* Largura mínima de 900px, garantindo que todas as colunas são visíveis (ativa o scroll no .table-wrapper) */
+  border-radius: 12px; /* Arredonda os cantos da tabela */
+  overflow: hidden; /* Esconde o conteúdo que ultrapasse os cantos arredondados */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* Sombra suave por baixo da tabela */
+} /* Fecha o estilo da table */
+
+th, td { /* Estilo aplicado a todas as células da tabela (cabeçalho e corpo) */
+  padding: 12px 15px; /* Espaço interior: 12px em cima/baixo e 15px nos lados, para o texto não colar às bordas */
+  text-align: left; /* Alinha o texto à esquerda em todas as células */
+} /* Fecha o estilo do th e td */
+
+th { /* Estilo específico para as células do cabeçalho da tabela */
+  background-color: #6c8a76; /* Cor de fundo verde acinzentado para o cabeçalho */
+  color: #f5f5f5; /* Cor do texto quase branco para contrastar com o fundo escuro do cabeçalho */
+  font-weight: 700; /* Texto em Bold no cabeçalho */
+} /* Fecha o estilo do th */
+
+td { /* Estilo específico para as células do corpo da tabela */
+  background-color: #eafbef; /* Cor de fundo verde muito claro para as células de dados */
+  border-bottom: 1px solid #d4edda; /* Linha separadora verde clara entre as linhas da tabela */
+} /* Fecha o estilo do td */
+
+tr:last-child td { /* Estilo aplicado às células da ÚLTIMA linha da tabela */
+  border-bottom: none; /* Remove a linha separadora da última linha, pois não há linha abaixo */
+} /* Fecha o estilo do tr:last-child td */
+
+tr:nth-child(even) td { /* Estilo aplicado às células das linhas PARES da tabela (2ª, 4ª, 6ª...) */
+  background-color: #d4edda; /* Cor de fundo verde ligeiramente mais escura nas linhas pares, criando o efeito zebra para facilitar a leitura */
+} /* Fecha o estilo das linhas pares */
+
+/* ==== ASSINATURA HORIZONTAL ==== */
+.signature {
+  margin-top: 20px;
+  padding-top: 10px; /* Espaço acima do texto */
+  padding-bottom: 0px; /* Espaço abaixo do texto (diminuído) */
+  margin-top: 20px; /* Espaço acima de toda a assinatura */
+  margin-bottom: 0px; /* Espaço abaixo de toda a assinatura (diminuído) */
+  border-top: 1px solid rgba(0,0,0,0.05); /* Linha muito subtil */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px; /* Espaço entre o texto e o logo */
+  opacity: 0.5; /* Discreto para não distrair do conteúdo principal */
+  transition: opacity 0.3s ease;
+}
+
+.signature:hover {
+  opacity: 1; /* Ganha destaque ao passar o rato */
+}
+
+.produced-by {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #888;
+  font-weight: 700;
+}
+
+.signature img {
+  height: 22px; /* Tamanho elegante para a mesma linha do texto */
+  width: auto;
+}
+
+.brand-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #2F7D4A; /* Usei o verde da tua app para dar um toque de cor */
+}
+
+/* ==== RESPONSIVO MOBILE ==== */
+/* Estas regras só funcionam em telemóveis (até 600px) */
+
+@media (max-width: 600px) {
+
+  body { /* Menos espaço nas laterais */
+    padding: 12px;
+  }
+
+  #worker-app,
+  #manager-app { /* Caixas mais compactas */
+    padding: 20px 15px;
+    border-radius: 14px;
+  }
+
+  h2 { /* Títulos ligeiramente menores */
+    font-size: 18px;
+  }
+
+  button { /* Botões melhores para toque */
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .manager-btns { /* Botões em coluna */
+    flex-direction: column;
+  }
+
+  .manager-btns button {
+    width: 100%; /* Ocupam toda a largura */
+  }
+
+  .signature { /* Assinatura mais compacta */
+    margin-top: 15px;
+    gap: 8px;
+  }
+
+}
+/* ==== CORREÇÃO iOS INPUT DATE/TIME ==== */
+/* O Safari (iPhone) aplica estilos próprios aos inputs de data/hora.
+   Isto remove esses estilos para ficarem iguais aos outros campos */
+
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none; /* Remove estilo nativo do iOS */
+  appearance: none; /* Compatibilidade geral */
+  background-color: #fff; /* Garante fundo branco */
+  min-height: 48px; /* Altura consistente com os outros inputs */
+}
+
+/* Corrige alinhamento interno no iOS */
+input[type="date"]::-webkit-date-and-time-value,
+input[type="time"]::-webkit-date-and-time-value {
+  text-align: left;
+}
+/* ==== LABELS DO FORMULÁRIO ==== */
+label { /* Estilo das labels que aparecem por cima dos campos */
+  display: block; /* Ocupa a linha toda, ficando por cima do input */
+  font-size: 12px; /* Tamanho pequeno para não competir com o conteúdo do campo */
+  font-weight: 700; /* Bold para ser bem legível */
+  color: #2F7D4A; /* Verde da app para dar consistência visual */
+  margin-top: 12px; /* Espaço acima da label para separar dos campos anteriores */
+  margin-bottom: 3px; /* Espaço pequeno entre a label e o campo */
+  letter-spacing: 1px; /* Espaçamento entre letras para aspeto mais profissional */
+  text-transform: uppercase; /* Texto em maiúsculas, igual ao estilo geral da app */
+} /* Fecha o estilo da label */
+
+/* Garante que a label do transporte não herda o estilo acima */
+.transport-label { /* Sobrescreve o estilo base da label para a checkbox de transporte */
+  font-size: 16px; /* Tamanho maior, igual aos outros campos */
+  text-transform: none; /* Remove as maiúsculas forçadas */
+  letter-spacing: 0; /* Remove o espaçamento extra */
+  color: #282828; /* Cor escura normal, igual ao texto da app */
+} /* Fecha o estilo do .transport-label */  padding: 40px 35px; /* Espaço interior: 40px em cima/baixo e 35px nos lados, para o conteúdo não colar às bordas */
   border-radius: 20px; /* Arredonda os cantos da caixa com um raio de 20px */
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25); /* Sombra suave por baixo da caixa: deslocada 10px para baixo, com 40px de desfoque e 25% de opacidade */
   width: 100%; /* A caixa ocupa 100% da largura disponível (limitada pelo max-width abaixo) */
