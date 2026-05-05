@@ -20,13 +20,13 @@
 
   <!-- LOGIN --> <!-- Comentário a separar e identificar a secção de login -->
   <div id="login-section"> <!-- Caixa que contém todo o formulário de login. O id permite ao JavaScript mostrá-la/escondê-la -->
-    <img src="logo_vector.png" alt="Espiga Solta" class="login-logo"> <!-- Imagem do logótipo. alt é o texto alternativo se a imagem não carregar. class aplica os estilos do logo -->
+    <img src="images/logo_vector.png" alt="Espiga Solta" class="login-logo"> <!-- Imagem do logótipo. alt é o texto alternativo se a imagem não carregar. class aplica os estilos do logo -->
     <input type="email" id="email" placeholder="EMAIL"> <!-- Campo de texto para o email. type="email" valida automaticamente o formato. placeholder mostra "EMAIL" em cinzento -->
     <input type="password" id="password" placeholder="PASSWORD"> <!-- Campo de password. type="password" esconde os caracteres com pontos (●●●). placeholder mostra "PASSWORD" -->
     <button onclick="login()">LOGIN</button> <!-- Botão que ao ser clicado executa a função login() definida no app.js -->
     <footer class="signature">
       <span class="produced-by">PRODUCED BY</span>
-      <img src="logo_amusing_cloud.png" alt="Logo">
+      <img src="images/logo_amusing_cloud.png" alt="Logo">
       <span class="brand-name">AMUSING-CLOUD</span>
     </footer>
   </div>
@@ -35,23 +35,37 @@
   <div id="worker-app" class="hidden"> <!-- Caixa da vista do Trabalhador. class="hidden" torna-a invisível até o login ser feito com o perfil correto -->
     <h2>NOVO SERVIÇO</h2> <!-- Título de nível 2 da secção de inserção de serviços -->
     <form id="serviceForm"> <!-- Formulário com id "serviceForm". O JavaScript vai detetar a sua submissão para guardar os dados -->
-      <input type="text" id="company" placeholder="Empresa (Cliente)"> <!-- Campo de texto para o nome da empresa cliente onde o serviço foi prestado -->
-      <input type="text" id="location" placeholder="Local"> <!-- Campo de texto para o local/morada onde o serviço foi realizado -->
-      <input type="date" id="date"> <!-- Campo de data do serviço. type="date" mostra um calendário automático no browser/telemóvel -->
-      <input type="time" id="startTime" placeholder="Hora de Início"> <!-- Campo de hora de início. type="time" mostra um seletor de horas no telemóvel -->
-      <input type="time" id="endTime" placeholder="Hora de Fim"> <!-- Campo de hora de fim. Igual ao anterior mas para registar quando o serviço terminou -->
-      <label class="transport-label"> <!-- Etiqueta que agrupa o texto "Transporte" com a sua checkbox. class aplica os estilos específicos -->
-        Transporte <!-- Texto visível ao lado da checkbox que indica o que esta representa -->
-        <input type="checkbox" id="transport"> <!-- Checkbox para indicar se houve transporte. Quando marcada o valor é true, desmarcada é false -->
-      </label>
-      <input type="text" id="designation" placeholder="Designação de Serviço"> <!-- Campo de texto para a designação/nome do tipo de serviço prestado -->
-      <button type="submit">GUARDAR</button> <!-- Botão de submissão do formulário. type="submit" envia os dados ao ser clicado -->
-    </form>
+
+  <label for="company">Empresa (Cliente)</label> <!-- Label visível por cima do campo, mais legível que o placeholder -->
+  <input type="text" id="company"> <!-- Campo de texto para o nome da empresa cliente -->
+
+  <label for="location">Local</label> <!-- Label por cima do campo de local -->
+  <input type="text" id="location"> <!-- Campo de texto para o local onde o serviço foi realizado -->
+
+  <label for="date">Data</label> <!-- Label por cima do campo de data -->
+  <input type="date" id="date"> <!-- Campo de data do serviço -->
+
+  <label for="startTime">Hora de Início</label> <!-- Label por cima do campo de hora de início -->
+  <input type="time" id="startTime"> <!-- Campo de hora de início -->
+
+  <label for="endTime">Hora de Fim</label> <!-- Label por cima do campo de hora de fim -->
+  <input type="time" id="endTime"> <!-- Campo de hora de fim -->
+
+  <label class="transport-label"> <!-- Etiqueta que agrupa o texto "Transporte" com a sua checkbox -->
+    Transporte <!-- Texto visível ao lado da checkbox -->
+    <input type="checkbox" id="transport"> <!-- Checkbox para indicar se houve transporte -->
+  </label>
+
+  <label for="designation">Designação de Serviço</label> <!-- Label por cima do campo de designação -->
+  <input type="text" id="designation"> <!-- Campo de texto para a designação do serviço -->
+
+  <button type="submit">GUARDAR</button> <!-- Botão de submissão do formulário -->
+</form>
     <p id="successMsg" class="hidden success-msg">SERVIÇO GUARDADO COM SUCESSO!</p> <!-- Mensagem de confirmação. Começa escondida (hidden) e aparece após guardar com sucesso -->
     <button onclick="logout()" class="logout-btn">LOGOUT</button> <!-- Botão de logout do Trabalhador. class="logout-btn" aplica um estilo visual diferente dos outros botões -->
     <footer class="signature">
       <span class="produced-by">PRODUCED BY</span>
-      <img src="logo_amusing_cloud.png" alt="Logo">
+      <img src="images/logo_amusing_cloud.png" alt="Logo">
       <span class="brand-name">AMUSING-CLOUD</span>
     </footer>
   </div>
@@ -85,7 +99,7 @@
     </div>
     <footer class="signature">
       <span class="produced-by">PRODUCED BY</span>
-      <img src="logo_amusing_cloud.png" alt="Logo">
+      <img src="images/logo_amusing_cloud.png" alt="Logo">
       <span class="brand-name">AMUSING-CLOUD</span>
     </footer>
   </div>
