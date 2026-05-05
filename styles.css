@@ -10,7 +10,7 @@ body { /* Estilo aplicado a toda a página, define a aparência geral */
 
 /* ==== FUNDO LOGIN ==== */
 body.login-bg { /* Estilo aplicado ao body APENAS quando tem a classe "login-bg" (página de login) */
-  background-image: url('images/anna-mircea-jhP9c_mpkRI-unsplash.jpg'); /* Define a imagem de fundo da página de login, localizada na pasta images */
+  background-image: url('anna-mircea-jhP9c_mpkRI-unsplash.jpg'); /* Define a imagem de fundo da página de login, localizada na pasta images */
   background-size: cover; /* Faz a imagem cobrir toda a área do ecrã, sem deixar espaços em branco, mesmo que seja cortada */
   background-position: center; /* Centra a imagem de fundo, garantindo que a parte central fica sempre visível */
   background-repeat: no-repeat; /* Impede que a imagem se repita caso seja menor que o ecrã */
