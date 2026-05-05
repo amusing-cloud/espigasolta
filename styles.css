@@ -272,3 +272,41 @@ tr:nth-child(even) td { /* Estilo aplicado às células das linhas PARES da tabe
   letter-spacing: 1px;
   color: #2F7D4A; /* Usei o verde da tua app para dar um toque de cor */
 }
+/* ==== RESPONSIVO MOBILE ==== */
+/* Estas regras só funcionam em telemóveis (até 600px) */
+
+@media (max-width: 600px) {
+
+  body { /* Menos espaço nas laterais */
+    padding: 12px;
+  }
+
+  #worker-app,
+  #manager-app { /* Caixas mais compactas */
+    padding: 20px 15px;
+    border-radius: 14px;
+  }
+
+  h2 { /* Títulos ligeiramente menores */
+    font-size: 18px;
+  }
+
+  button { /* Botões melhores para toque */
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  .manager-btns { /* Botões em coluna */
+    flex-direction: column;
+  }
+
+  .manager-btns button {
+    width: 100%; /* Ocupam toda a largura */
+  }
+
+  .signature { /* Assinatura mais compacta */
+    margin-top: 15px;
+    gap: 8px;
+  }
+
+}
