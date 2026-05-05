@@ -4,11 +4,11 @@
   <meta charset="UTF-8"> <!-- Define a codificação de caracteres UTF-8, permitindo acentos e caracteres especiais (ã, é, ç...) -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- ESSENCIAL: ativa o design responsivo no telemóvel -->
   <title>ESPIGA À SOLTA</title> <!-- Texto que aparece no separador (aba) do browser e quando se guarda nos favoritos -->
-  <link rel="icon" type="image/png" href="logo_fav.png"> <!-- Define o favicon (ícone pequeno no separador do browser). Aponta para a imagem logo_fav.png na pasta images -->
+  <link rel="icon" type="image/png" href="images/logo_fav.png"> <!-- Define o favicon (ícone pequeno no separador do browser). Aponta para a imagem logo_fav.png na pasta images -->
   <!-- Ícone para iPhone/iOS --> <!-- Comentário a indicar que o link seguinte é específico para dispositivos Apple -->
-  <link rel="apple-touch-icon" href="logo_fav.png"> <!-- Ícone que aparece quando o utilizador guarda a app no ecrã inicial do iPhone/iPad -->
+  <link rel="apple-touch-icon" href="images/logo_fav.png"> <!-- Ícone que aparece quando o utilizador guarda a app no ecrã inicial do iPhone/iPad -->
   <!-- Ícone para Android e Chrome --> <!-- Comentário a indicar que o link seguinte é específico para Android e Chrome -->
-  <link rel="icon" sizes="192x192" href="logo_fav.png"> <!-- Ícone de alta resolução (192x192 pixels) para Android e Chrome, usado quando se instala como PWA -->
+  <link rel="icon" sizes="192x192" href="images/logo_fav.png"> <!-- Ícone de alta resolução (192x192 pixels) para Android e Chrome, usado quando se instala como PWA -->
   <!-- Cor da barra de endereço no telemóvel (opcional, para combinar com a app) --> <!-- Comentário explicativo sobre a meta tag seguinte -->
   <meta name="theme-color" content="#2F7D4A"> <!-- Define a cor da barra de endereço do browser no telemóvel. #2F7D4A é o verde da app -->
   <meta name="mobile-web-app-capable" content="yes"> <!-- Permite que a app seja instalada no ecrã inicial do Android como uma app autónoma (sem barra do browser) -->
@@ -20,13 +20,13 @@
 
   <!-- LOGIN --> <!-- Comentário a separar e identificar a secção de login -->
   <div id="login-section"> <!-- Caixa que contém todo o formulário de login. O id permite ao JavaScript mostrá-la/escondê-la -->
-    <img src="logo_vector.png" alt="Espiga Solta" class="login-logo"> <!-- Imagem do logótipo. alt é o texto alternativo se a imagem não carregar. class aplica os estilos do logo -->
+    <img src="images/logo_vector.png" alt="Espiga Solta" class="login-logo"> <!-- Imagem do logótipo. alt é o texto alternativo se a imagem não carregar. class aplica os estilos do logo -->
     <input type="email" id="email" placeholder="EMAIL"> <!-- Campo de texto para o email. type="email" valida automaticamente o formato. placeholder mostra "EMAIL" em cinzento -->
     <input type="password" id="password" placeholder="PASSWORD"> <!-- Campo de password. type="password" esconde os caracteres com pontos (●●●). placeholder mostra "PASSWORD" -->
     <button onclick="login()">LOGIN</button> <!-- Botão que ao ser clicado executa a função login() definida no app.js -->
     <footer class="signature">
       <span class="produced-by">PRODUCED BY</span>
-      <img src="logo_amusing_cloud.png" alt="Logo">
+      <img src="images/logo_amusing_cloud.png" alt="Logo">
       <span class="brand-name">AMUSING-CLOUD</span>
     </footer>
   </div>
@@ -51,6 +51,9 @@
   <label for="endTime">Hora de Fim</label> <!-- Label por cima do campo de hora de fim -->
   <input type="time" id="endTime"> <!-- Campo de hora de fim -->
 
+  <label for="workerHours">Horas Trabalhador</label> <!-- Label por cima do campo de horas do trabalhador -->
+  <input type="number" id="workerHours" placeholder="0" min="0" step="0.5"> <!-- Campo numérico para o trabalhador inserir as horas. step="0.5" permite meios valores (ex: 7.5h) -->
+  
   <label class="transport-label"> <!-- Etiqueta que agrupa o texto "Transporte" com a sua checkbox -->
     Transporte <!-- Texto visível ao lado da checkbox -->
     <input type="checkbox" id="transport"> <!-- Checkbox para indicar se houve transporte -->
@@ -65,7 +68,7 @@
     <button onclick="logout()" class="logout-btn">LOGOUT</button> <!-- Botão de logout do Trabalhador. class="logout-btn" aplica um estilo visual diferente dos outros botões -->
     <footer class="signature">
       <span class="produced-by">PRODUCED BY</span>
-      <img src="logo_amusing_cloud.png" alt="Logo">
+      <img src="images/logo_amusing_cloud.png" alt="Logo">
       <span class="brand-name">AMUSING-CLOUD</span>
     </footer>
   </div>
@@ -84,6 +87,7 @@
             <th>Hora Início</th> <!-- Cabeçalho da coluna com a hora de início do serviço -->
             <th>Hora Fim</th> <!-- Cabeçalho da coluna com a hora de fim do serviço -->
             <th>Horas Totais</th> <!-- Cabeçalho da coluna calculada automaticamente com a duração total do serviço -->
+            <th>Horas Trabalhador</th> <!-- Coluna com as horas inseridas manualmente pelo trabalhador -->
             <th>Transporte</th> <!-- Cabeçalho da coluna que indica se houve transporte (Sim/Não) -->
             <th>Designação</th> <!-- Cabeçalho da coluna com a designação/tipo do serviço -->
             <th>Faturado</th> <!-- Cabeçalho da coluna com a checkbox que indica se o serviço já foi faturado -->
@@ -99,7 +103,7 @@
     </div>
     <footer class="signature">
       <span class="produced-by">PRODUCED BY</span>
-      <img src="logo_amusing_cloud.png" alt="Logo">
+      <img src="images/logo_amusing_cloud.png" alt="Logo">
       <span class="brand-name">AMUSING-CLOUD</span>
     </footer>
   </div>
