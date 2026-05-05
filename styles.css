@@ -310,3 +310,20 @@ tr:nth-child(even) td { /* Estilo aplicado às células das linhas PARES da tabe
   }
 
 }
+/* ==== CORREÇÃO iOS INPUT DATE/TIME ==== */
+/* O Safari (iPhone) aplica estilos próprios aos inputs de data/hora.
+   Isto remove esses estilos para ficarem iguais aos outros campos */
+
+input[type="date"],
+input[type="time"] {
+  -webkit-appearance: none; /* Remove estilo nativo do iOS */
+  appearance: none; /* Compatibilidade geral */
+  background-color: #fff; /* Garante fundo branco */
+  min-height: 48px; /* Altura consistente com os outros inputs */
+}
+
+/* Corrige alinhamento interno no iOS */
+input[type="date"]::-webkit-date-and-time-value,
+input[type="time"]::-webkit-date-and-time-value {
+  text-align: left;
+}
