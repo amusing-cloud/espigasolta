@@ -67,7 +67,7 @@ function calcularHoras(startTime, endTime) { // Função que recebe a hora de in
   if (totalMin < 0) totalMin += 24 * 60; // SE o resultado for negativo (serviço passou a meia-noite), adiciona 24h em minutos para corrigir
   const h = Math.floor(totalMin / 60); // Calcula as horas inteiras dividindo os minutos totais por 60 (arredonda para baixo)
   const m = totalMin % 60; // Calcula os minutos restantes usando o resto da divisão por 60
-  return `${h}h${m > 0 ? m + 'm' : ''}`; // Devolve a duração formatada (ex: "8h30m" ou "9h" se não houver minutos)
+  return parseFloat((h + m / 60).toFixed(2)); // Devolve número decimal (ex: 8.5) compatível com soma no Excel
 } // Fecha a função calcularHoras
 
 // 🔹 GUARDAR SERVIÇO
