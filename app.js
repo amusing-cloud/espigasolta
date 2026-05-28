@@ -123,7 +123,7 @@ row.innerHTML = `
   <td>${s.startTime || '-'}</td>
   <td>${s.endTime || '-'}</td>
   <td>${totalHours}</td>
-  <td>${s.workerHours !== undefined ? s.workerHours + 'h' : '-'}</td>
+  <td>${s.workerHours !== undefined ? s.workerHours : '-'}</td>
   <td>${s.transport || '-'}</td>
   <td>${s.designation || '-'}</td>
   <td><input type="checkbox" ${s.billed ? 'checked' : ''} onchange="toggleBilled('${doc.id}', this.checked)"></td>
