@@ -76,10 +76,25 @@
   <!-- VISTA GESTOR --> <!-- Comentário a separar e identificar a secção exclusiva do perfil Gestor -->
   <div id="manager-app" class="hidden"> <!-- Caixa da vista do Gestor. class="hidden" torna-a invisível até o login ser feito com o perfil de gestor -->
     <h2>SERVIÇOS</h2> <!-- Título de nível 2 da secção da tabela de serviços -->
+    <div class="manager-actions">
+      <button onclick="bulkMarkSelectedBilled()">FATURAR SELECIONADOS</button>
+      <button onclick="bulkDeleteSelected()" class="danger-btn">APAGAR SELECIONADOS</button>
+    </div>
+    <div class="sort-controls">
+      <label for="sortSelect">Ordenar por</label>
+      <select id="sortSelect" onchange="loadServices()">
+        <option value="id">ID</option>
+        <option value="company">Empresa</option>
+        <option value="location">Local</option>
+        <option value="date">Data</option>
+        <option value="designation">Designação</option>
+      </select>
+    </div>
     <div class="table-wrapper"> <!-- Caixa envolvente da tabela. Permite scroll horizontal em ecrãs pequenos sem quebrar o layout -->
       <table id="servicesTable"> <!-- Tabela com id "servicesTable". O JavaScript vai preencher as linhas dinamicamente com os dados do Firebase -->
         <thead> <!-- Cabeçalho da tabela, contém os títulos das colunas. Não é apagado quando a tabela é recarregada -->
           <tr> <!-- Uma linha (tr = table row) dentro do cabeçalho com todas as colunas -->
+            <th class="selection-col"><input type="checkbox" id="selectAll" onchange="toggleSelectAll(this.checked)"></th>
             <th>ID</th> <!-- Cabeçalho da coluna com o identificador único de cada serviço -->
             <th>Empresa</th> <!-- Cabeçalho da coluna com o nome da empresa cliente -->
             <th>Local</th> <!-- Cabeçalho da coluna com o local onde o serviço foi prestado -->
