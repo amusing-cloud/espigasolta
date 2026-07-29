@@ -189,6 +189,36 @@ button:hover { /* Estilo aplicado quando o utilizador passa o rato por cima de u
   margin-top: 20px; /* Adiciona 20px de espaço acima dos botões, separando-os da tabela */
 } /* Fecha o estilo do .manager-btns */
 
+.manager-actions { /* Botões de ação em massa para o Gestor */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.manager-actions button {
+  width: auto;
+}
+
+.danger-btn {
+  background-color: #b72d2d;
+}
+
+.danger-btn:hover {
+  background-color: #8a2323;
+}
+
+.selection-col, .actions-col { /* Ajusta largura das colunas de seleção e ações */
+  width: 48px;
+  text-align: center;
+}
+
+.select-checkbox { /* Estilo para as checkboxes da tabela */
+  width: 18px;
+  height: 18px;
+  accent-color: #2F7D4A;
+}
+
 .manager-btns button { /* Estilo específico para os botões dentro do contentor .manager-btns */
   width: auto; /* Sobrescreve o width: 100% do base, para os botões terem apenas a largura do seu conteúdo */
 } /* Fecha o estilo dos botões do .manager-btns */
@@ -346,7 +376,8 @@ label { /* Estilo das labels que aparecem por cima dos campos */
   text-transform: none; /* Remove as maiúsculas forçadas */
   letter-spacing: 0; /* Remove o espaçamento extra */
   color: #282828; /* Cor escura normal, igual ao texto da app */
-} /* Fecha o estilo do .transport-label */  padding: 40px 35px; /* Espaço interior: 40px em cima/baixo e 35px nos lados, para o conteúdo não colar às bordas */
+ /* Fecha o estilo do .transport-label */  
+  padding: 40px 35px; /* Espaço interior: 40px em cima/baixo e 35px nos lados, para o conteúdo não colar às bordas */
   border-radius: 20px; /* Arredonda os cantos da caixa com um raio de 20px */
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25); /* Sombra suave por baixo da caixa: deslocada 10px para baixo, com 40px de desfoque e 25% de opacidade */
   width: 100%; /* A caixa ocupa 100% da largura disponível (limitada pelo max-width abaixo) */
@@ -659,3 +690,27 @@ label { /* Estilo das labels que aparecem por cima dos campos */
   letter-spacing: 0; /* Remove o espaçamento extra */
   color: #282828; /* Cor escura normal, igual ao texto da app */
 } /* Fecha o estilo do .transport-label */
+
+/* ==== ORDENAÇÃO DA TABELA ==== */
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.sort-controls label {
+  margin: 0;
+}
+
+.sort-controls select {
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-weight: 700;
+  border: 1px solid #2F7D4A;
+  border-radius: 12px;
+  background-color: #fff;
+  color: #282828;
+  cursor: pointer;
+}
