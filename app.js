@@ -16,6 +16,7 @@ const gestores = [ // Cria uma lista (array) com os emails que têm perfil de Ge
 const app = firebase.initializeApp(firebaseConfig); // Inicia a ligação ao Firebase usando as credenciais definidas acima
 const auth = firebase.auth(); // Cria o objeto "auth" que dá acesso a todas as funções de autenticação (login/logout)
 const db = firebase.firestore(); // Cria o objeto "db" (database) que permite ler e escrever na base de dados Firestore
+const selectedServiceIds = new Set(); // Guarda temporary os ids de serviços selecionados na tabela do Gestor
 
 // 🔹 Estado automático de login
 auth.onAuthStateChanged(user => { // Função chamada AUTOMATICAMENTE sempre que o estado de login muda (login, logout ou ao recarregar a página)
@@ -75,7 +76,8 @@ document.getElementById('serviceForm').addEventListener('submit', async (e) => {
   e.preventDefault(); // Impede o comportamento padrão do formulário que seria recarregar a página ao submeter
 
   // ID Sequencial
-  const snapshot = await db.collection('services').get(); // Vai buscar todos os documentos da coleção "services" para contar quantos existem
+  const sortField = document.getElementById('sortSelect')?.value || 'id'; // Vai buscar o campo escolhido no seletor de ordenação; usa "id" por defeito se o seletor ainda não existir
+  const snapshot = await db.collection('services').orderBy(sortField, 'asc').get(); // Vai buscar todos os serviços ordenados pelo campo escolhido, de forma crescente
   const nextId = snapshot.size + 1; // O próximo ID é o número total de serviços existentes + 1 (ex: se há 5, o próximo é 6)
 
   const service = { // Cria um objeto com todos os dados do formulário para guardar na base de dados
@@ -106,16 +108,35 @@ document.getElementById('serviceForm').addEventListener('submit', async (e) => {
 async function loadServices() { // Função assíncrona que vai buscar todos os serviços ao Firebase e preenche a tabela do Gestor
   const tbody = document.querySelector('#servicesTable tbody'); // Encontra o corpo da tabela (tbody) dentro da tabela com id "servicesTable"
   tbody.innerHTML = ''; // Limpa todo o conteúdo atual da tabela para evitar duplicar linhas ao recarregar
+  selectedServiceIds.clear();
+  const selectAll = document.getElementById('selectAll');
+  if (selectAll) selectAll.checked = false;
 
-  const snapshot = await db.collection('services').orderBy('id', 'asc').get(); // Vai buscar todos os serviços ordenados pelo campo "id" de forma crescente (1, 2, 3...)
+  const sortField = document.getElementById('sortSelect')?.value || 'id'; // Vai buscar o campo escolhido no seletor de ordenação; usa "id" por defeito se o seletor ainda não existir
+  const snapshot = await db.collection('services').get(); // Vai buscar TODOS os serviços, sem ordenação do Firestore (ordenamos nós a seguir, de forma controlada)
 
-  snapshot.forEach(doc => { // Para cada documento (serviço) encontrado na base de dados, executa o que está aqui dentro...
-    const s = doc.data(); // Extrai os dados do documento para a variável "s" (abreviatura de "service")
+  const services = snapshot.docs.map(doc => ({ ...doc.data(), _docId: doc.id })); // Converte cada documento num objeto de dados, guardando também o id do documento Firebase em "_docId"
+
+  services.sort((a, b) => { // Ordena o array em memória consoante o campo escolhido no seletor
+    const valA = a[sortField]; // Valor do campo escolhido no serviço A
+    const valB = b[sortField]; // Valor do campo escolhido no serviço B
+
+    if (sortField === 'id') { // SE estamos a ordenar por ID, compara como números
+      return (valA || 0) - (valB || 0);
+    }
+    if (sortField === 'date') { // SE estamos a ordenar por Data, compara como datas reais (não como texto)
+      return new Date(valA || 0) - new Date(valB || 0);
+    }
+    return (valA || '').toString().localeCompare((valB || '').toString(), 'pt', { sensitivity: 'base' }); // Para os restantes campos (texto), compara ignorando maiúsculas/minúsculas e acentos
+  }); // Fecha o sort
+
+  services.forEach(s => { // Para cada serviço já ordenado, executa o que está aqui dentro...
     const totalHours = calcularHoras(s.startTime, s.endTime); // Calcula as horas totais do serviço chamando a função criada acima
 
   const row = document.createElement('tr'); // Cria um novo elemento HTML <tr> (linha de tabela) em memória, ainda não visível na página
 
 row.innerHTML = ` 
+  <td><input type="checkbox" class="select-checkbox" data-doc-id="${s._docId}" onchange="toggleServiceSelection('${s._docId}', this.checked)"></td>
   <td>${s.id || '-'}</td>
   <td>${s.company || '-'}</td>
   <td>${s.location || '-'}</td>
@@ -126,13 +147,55 @@ row.innerHTML = `
   <td>${s.workerHours !== undefined ? s.workerHours : '-'}</td>
   <td>${s.transport || '-'}</td>
   <td>${s.designation || '-'}</td>
-  <td><input type="checkbox" ${s.billed ? 'checked' : ''} onchange="toggleBilled('${doc.id}', this.checked)"></td>
-  <td><button class="delete-btn" onclick="deleteService('${doc.id}')">🗑️</button></td>
+  <td><input type="checkbox" ${s.billed ? 'checked' : ''} onchange="toggleBilled('${s._docId}', this.checked)"></td>
+  <td><button class="delete-btn" onclick="deleteService('${s._docId}')">🗑️</button></td>
 `; // Fecha o template literal do innerHTML
 
     tbody.appendChild(row); // Adiciona a linha criada ao corpo da tabela, tornando-a visível na página
   }); // Fecha o forEach
 } // Fecha a função loadServices
+
+function toggleSelectAll(checked) {
+  document.querySelectorAll('.select-checkbox').forEach(input => {
+    input.checked = checked;
+    const id = input.dataset.docId;
+    if (checked) selectedServiceIds.add(id);
+    else selectedServiceIds.delete(id);
+  });
+}
+
+function toggleServiceSelection(id, checked) {
+  if (checked) selectedServiceIds.add(id);
+  else selectedServiceIds.delete(id);
+  const allCheckboxes = document.querySelectorAll('.select-checkbox');
+  const selectAll = document.getElementById('selectAll');
+  if (selectAll) {
+    selectAll.checked = allCheckboxes.length > 0 && [...allCheckboxes].every(cb => cb.checked);
+  }
+}
+
+async function bulkMarkSelectedBilled() {
+  if (selectedServiceIds.size === 0) {
+    alert('Seleciona pelo menos um serviço primeiro.');
+    return;
+  }
+  const updates = [...selectedServiceIds].map(id => db.collection('services').doc(id).update({ billed: true }));
+  await Promise.all(updates);
+  selectedServiceIds.clear();
+  loadServices();
+}
+
+async function bulkDeleteSelected() {
+  if (selectedServiceIds.size === 0) {
+    alert('Seleciona pelo menos um serviço primeiro.');
+    return;
+  }
+  if (!confirm('Tens a certeza que queres apagar os serviços selecionados?')) return;
+  const deletes = [...selectedServiceIds].map(id => db.collection('services').doc(id).delete());
+  await Promise.all(deletes);
+  selectedServiceIds.clear();
+  loadServices();
+}
 
 // 🔹 ALTERAR FATURADO
 async function toggleBilled(id, value) { // Função chamada quando o utilizador clica numa checkbox de "Faturado". Recebe o id do documento Firebase e o novo valor (true/false)
@@ -157,9 +220,15 @@ function exportToCSV() { // Declara a função que exporta os dados da tabela pa
     let rowData = []; // Cria uma lista vazia para guardar os valores desta linha
     cols.forEach(col => { // Para cada célula da linha...
       // Limpar o texto: remover quebras de linha e escapar aspas
-      let data = col.innerText.replace(/\n/g, " ").replace(/"/g, '""'); // Remove quebras de linha substituindo por espaço, e duplica as aspas para escapar corretamente no CSV
+      const checkbox = col.querySelector('input[type="checkbox"]');
+      let data;
+      if (checkbox && !checkbox.classList.contains('select-checkbox')) {
+        data = checkbox.checked ? 'Sim' : 'Não';
+      } else {
+        data = col.innerText.replace(/\n/g, " ").replace(/"/g, '""'); // Remove quebras de linha substituindo por espaço, e duplica as aspas para escapar corretamente no CSV
+      }
       // Se for a coluna de ações (lixo), não exportar
-      if (col.querySelector('.delete-btn')) return; // SE a célula contém o botão de apagar, ignora-a e passa para a próxima (não exporta a coluna de ações)
+      if (col.querySelector('.delete-btn') || col.querySelector('.select-checkbox') || col.querySelector('#selectAll')) return; // SE a célula contém o botão de apagar ou checkbox de seleção, ignora-a
       rowData.push('"' + data + '"'); // Envolve o valor em aspas duplas (obrigatório no CSV para textos com vírgulas ou acentos) e adiciona à lista
     }); // Fecha o forEach das células
     if (rowData.length > 0) { // SE a linha tem dados (não está vazia)...
