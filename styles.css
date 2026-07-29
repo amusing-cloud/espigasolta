@@ -194,6 +194,7 @@ button:hover { /* Estilo aplicado quando o utilizador passa o rato por cima de u
   flex-wrap: wrap;
   gap: 12px;
   margin-bottom: 18px;
+  align-items: center;
 }
 
 .manager-actions button {
@@ -211,12 +212,27 @@ button:hover { /* Estilo aplicado quando o utilizador passa o rato por cima de u
 .selection-col, .actions-col { /* Ajusta largura das colunas de seleção e ações */
   width: 48px;
   text-align: center;
+  padding: 0;
 }
 
 .select-checkbox { /* Estilo para as checkboxes da tabela */
   width: 18px;
   height: 18px;
   accent-color: #2F7D4A;
+  margin: 0 auto;
+  display: block;
+  transform: scale(1.1);
+}
+
+th.selection-col input[type="checkbox"],
+td.selection-col input[type="checkbox"],
+.select-checkbox {
+  cursor: pointer;
+}
+
+.table-wrapper table th:first-child,
+.table-wrapper table td:first-child {
+  text-align: center;
 }
 
 .manager-btns button { /* Estilo específico para os botões dentro do contentor .manager-btns */
