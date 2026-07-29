@@ -136,7 +136,7 @@ async function loadServices() { // Função assíncrona que vai buscar todos os 
   const row = document.createElement('tr'); // Cria um novo elemento HTML <tr> (linha de tabela) em memória, ainda não visível na página
 
 row.innerHTML = ` 
-  <td><input type="checkbox" class="select-checkbox" data-doc-id="${s._docId}" onchange="toggleServiceSelection('${s._docId}', this.checked)"></td>
+  <td class="selection-col"><input type="checkbox" class="select-checkbox" data-doc-id="${s._docId}" onchange="toggleServiceSelection('${s._docId}', this.checked)"></td>
   <td>${s.id || '-'}</td>
   <td>${s.company || '-'}</td>
   <td>${s.location || '-'}</td>
